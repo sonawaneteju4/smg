@@ -4,7 +4,7 @@ import './App.css';
 function App() {
   return (
    <div>
-    Sree Ram Medical Billing And Mangement
+    Sree Ram Medical 
    </div>
   );
 }
