@@ -2,7 +2,8 @@ import './App.css';
 
 function App() {
   return (
-   <div className='text-center mt-20'> 
+   <div className='font-bold'> 
+   <span className='bg'></span>
     Sree Ram Medical <br /> Billing And Mangement
    </div>
   );
