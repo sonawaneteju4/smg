@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 
 const SignInForm = () => {
   const [userCredential, setuserCredential] = useState({ email: "", password: "" })
-  const [errMessage, seterrMessage] = useState("")
 
   const onChange = (e) => {
     setuserCredential({ ...userCredential, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = () => {
-    seterrMessage("Contact Admin Login Is Not Activated")
+    alert("hello")
   }
   return (
     <div className="flex justify-center items-center h-screen">
@@ -47,7 +46,7 @@ const SignInForm = () => {
         </div>
         <div className='mt-2 mb-2'>
           <small className="text-red-500 mt-2 font-extrabold  text-center">
-            {{ errMessage }}
+            {/* {{ errMessage }} */}
           </small>
         </div>
         <div className="flex items-center justify-between">
