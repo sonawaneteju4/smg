@@ -1,13 +1,10 @@
 import './App.css';
-import Navbar from './Pages/Navbar';
+import LoginPage from './Pages/Login/LoginPage';
 
 function App() {
   return (
     <>
-    <Navbar/>
-   <div className='text-center'> 
-    Sree Ram Medical <br /> Billing And Mangement
-   </div>
+    <LoginPage/>
     </>
   );
 }
