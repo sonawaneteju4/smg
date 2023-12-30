@@ -1,10 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Navbar = () => {
-  return (
-    <div className='h-10 flex item-center bg-slate-300'>
-        <div>Home</div>
+  const [isLoggedIn, setisLoggedIn] = useState(false)
+  useEffect(() => {
+    if (sessionStorage.getItem("token")) {
+      setisLoggedIn(true);
+    } else {
+      setisLoggedIn(false);
+    }
+  }, []);
+  return (<>{isLoggedIn ? (
+
+    <div className='h-10 bg-orange-500'>
+      <div className='flex  justify-between item-center px-5'>
+        <div className=' text-white' style={{ 'font-family': 'Kumar One' }}>Shriram Medical & Surgicals  </div>
+        <div className='text-black' style={{ 'font-family': 'mono' }}>SignOut</div>
+      </div>
     </div>
+  ):null}
+  </>
   )
 }
 
