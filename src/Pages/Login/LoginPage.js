@@ -10,7 +10,7 @@ const LoginPage = () => {
                 <div style={{'font-family': 'Kumar One'}} className=' font-extrabold text-white lg:text-4xl sm:text-xl'>Shriram Medical & Surgicals</div>
                 <div style={{ 'font-family': 'Kumar One' }} className='font-extrabold text-2xl text-white'>Sakri</div>
             </div>
-            <div className='basis-1/2'>
+            <div className='basis-1/2 '>
                 <SignInForm/>
             </div>
         </div>
