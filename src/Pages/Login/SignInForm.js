@@ -1,15 +1,45 @@
 import React, { useState } from 'react';
+import { auth } from "../../firebaseConfig";
+import { useNavigate } from 'react-router-dom';
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 
 const SignInForm = () => {
   const [userCredential, setuserCredential] = useState({ email: "", password: "" })
   const [errorMsg, setErrorMsg] = useState(false)
+  const nav = useNavigate();
+
+  onAuthStateChanged(
+    auth,
+    (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log(uid)
+
+        nav("/dashboard");
+      }
+    },
+    []
+  );
 
   const onChange = (e) => {
     setuserCredential({ ...userCredential, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
-    setErrorMsg(true)
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    try {
+      const userData = await signInWithEmailAndPassword(
+        auth,
+        userCredential.email,
+        userCredential.password
+      );
+      const user = userData.user;
+      localStorage.setItem("userId", user.uid);
+      nav("/dashboard");
+    } catch (error) {
+      console.log(error.message);
+      setErrorMsg(error.message);
+    }
   }
   return (
     <div className="flex justify-center items-center h-screen">
