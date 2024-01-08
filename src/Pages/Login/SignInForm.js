@@ -5,7 +5,7 @@ import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 
 const SignInForm = () => {
   const [userCredential, setuserCredential] = useState({ email: "", password: "" })
-  const [errorMsg, setErrorMsg] = useState(false)
+  const [errorMsg, setErrorMsg] = useState("")
   const nav = useNavigate();
 
   onAuthStateChanged(
@@ -37,51 +37,56 @@ const SignInForm = () => {
       localStorage.setItem("userId", user.uid);
       nav("/dashboard");
     } catch (error) {
-      console.log(error.message);
+      console.log("Err---->"+error.message);
       setErrorMsg(error.message);
     }
   }
   return (
     <div className="flex justify-center items-center h-screen">
-      <form className="lg:w-full max-w-md bg-gray-200 shadow-xl rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
+      <form style={{"backgroundColor" : "#F0F3F4"}} className="lg:w-full max-w-md shadow-xl rounded-2xl px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
+        <div className='text-center font-mono font-bold text-xl'>
+          <span>Login</span>
+          
+        </div>
+        
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+          <label className="block text-gray-700 text-sm font-mono ml-3 mb-2" htmlFor="email">
             Email
           </label>
           <input
-            className="shadow appearance-none border-2 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow rounded-3xl appearance-none border-2  w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="email"
             name="email"
             type="email"
-            placeholder="Email"
+            placeholder="Enter Your Email"
             value={userCredential.email}
             onChange={onChange}
             required
           />
         </div>
-        <div className="mb-6">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+        <div className="mb-3">
+          <label className="block text-gray-700 text-sm font-mono ml-3 mb-2" htmlFor="password">
             Password
           </label>
           <input
-            className="shadow appearance-none border-2 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border-2 rounded-3xl w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline"
             id="password"
             name='password'
             type="password"
-            placeholder="Password"
+            placeholder="Enter Your Password"
             value={userCredential.password}
             onChange={onChange}
             required
           />
         </div>
         <div className='mt-2 mb-2'>
-          <small className="text-red-500 mt-2 font-extrabold  text-center">
-            {errorMsg ? (<span>Contact Admin If Any Error While LogIn</span>):null}
-          </small>
+          <div className="text-red-500 mt-2 text-base text-center">
+            {errorMsg}
+          </div>
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-center">
           <button
-            className=" hover:bg-black bg-black/80 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className=" hover:bg-black bg-black/80 text-white font-bold py-2 px-4 rounded-3xl focus:outline-none focus:shadow-outline"
             type="submit"
           >
             Sign In
