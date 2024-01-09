@@ -11,8 +11,8 @@ const LoginPage = () => {
       }, []);
 
     return (<>
-        {isLoading && <Spinner/>}
 
+        {isLoading && <Spinner/>}
         <div className='lg:flex lg:flex-row sm:flex-col h-screen '>
             
             <div className='basis-1/2  bg-orange-500 flex flex-col items-center justify-center'>

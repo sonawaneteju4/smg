@@ -3,7 +3,7 @@ import './spinner.css'; // Import the CSS file
 
 const Spinner = () => {
   return (
-    <div className="flex h-screen items-center justify-center">
+    <div className="flex z-50 h-screen items-center justify-center">
     <div id="wifi-loader" className="relative">
       <svg className="circle-outer" viewBox="0 0 86 86">
         <circle className="back" cx="43" cy="43" r="40"></circle>
