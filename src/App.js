@@ -8,7 +8,7 @@ import { auth } from './firebaseConfig';
 import { useEffect, useState } from 'react';
 
 function App() {
-  const [islogin, setislogin] = useState(false)
+  const [islogin, setislogin] = useState(true)
   useEffect(() => {
     onAuthStateChanged(
       auth,
