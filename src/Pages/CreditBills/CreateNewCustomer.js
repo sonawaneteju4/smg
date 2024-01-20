@@ -1,6 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
 
 const CreateNewCustomer = ({ onClick }) => {
+  const [customerData, setcustomerData] = useState({
+    cName: "",
+    cPhone: "",
+    village: "",
+    pageNo: null,
+    cType: "",
+  });
+  const [errMsg, seterrMsg] = useState("")
+
+  const usersCollectionRef = collection(db, "customers");
+
+  const handleChange = (e) => {
+    setcustomerData({ ...customerData, [e.target.name]: e.target.value });
+  };
+
+  const checkUniquePhone = async () => {
+    const q = query(
+      usersCollectionRef,
+      where("cPhone", "==", customerData.cPhone)
+    );
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.empty;
+  };
+
+  const handleData = async () => {
+    try {
+      // Check if cPhone is unique
+      const isUnique = await checkUniquePhone();
+
+      if (isUnique) {
+        // Add a new customer
+        await addDoc(usersCollectionRef, customerData);
+        console.log(customerData);
+        console.log("Customer added successfully!");
+        alert("Customer added successfully!");
+        
+        onClick();
+      } else {
+        seterrMsg("Error: Customer Phone is not unique.");
+        console.log("Error: Customer Phone is not unique.");
+      }
+    } catch (error) {
+      console.error("Error adding customer:", error);
+    }
+  };
   return (
     <div className="fixed z-10 inset-0 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen">
@@ -22,10 +69,11 @@ const CreateNewCustomer = ({ onClick }) => {
             <div className="relative z-0 w-full mb-5 group">
               <input
                 type="text"
-                name="floating_email"
+                name="cName"
                 id="floating_email"
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
+                onChange={handleChange}
                 required
               />
               <label
@@ -36,30 +84,31 @@ const CreateNewCustomer = ({ onClick }) => {
               </label>
             </div>
             {/* <div className="">
-              <lable
-                className="block text-gray-700 text-sm  ml-3 mb-2"
-                htmlF0r="cName"
-              >
-                Customer Name
-              </lable>
-              <input
-                className="shadow rounded-xl appearance-none border-2 p-1  w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="cName"
-                name="cName"
-                type="cName"
-                placeholder="Enter Customer Name"
-                // value={userCredential.email}
-                // onChange={onChange}
-                required
-              />
-            </div> */}
+            <lable
+              className="block text-gray-700 text-sm  ml-3 mb-2"
+              htmlF0r="cName"
+            >
+              Customer Name
+            </lable>
+            <input
+              className="shadow rounded-xl appearance-none border-2 p-1  w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="cName"
+              name="cName"
+              type="cName"
+              placeholder="Enter Customer Name"
+              // value={userCredential.email}
+              // onChange={onChange}
+              required
+            />
+          </div> */}
             <div className="relative z-0 w-full mb-5 group">
               <input
                 type="number"
-                name="floating_email"
+                name="cPhone"
                 id="floating_email"
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
+                onChange={handleChange}
                 required
               />
               <label
@@ -72,10 +121,11 @@ const CreateNewCustomer = ({ onClick }) => {
             <div className="relative z-0 w-full mb-5 group">
               <input
                 type="number"
-                name="floating_email"
+                name="opningBal"
                 id="floating_email"
                 className="block py-2.5 px-0 w-full text-sm text-red-600 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
+                onChange={handleChange}
                 required
               />
               <label
@@ -88,10 +138,11 @@ const CreateNewCustomer = ({ onClick }) => {
             <div className="relative z-0 w-full mb-5 group">
               <input
                 type="text"
-                name="floating_email"
+                name="village"
                 id="floating_email"
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
+                onChange={handleChange}
                 required
               />
               <label
@@ -106,12 +157,12 @@ const CreateNewCustomer = ({ onClick }) => {
                 <div className="relative z-0 w-full mb-5 group">
                   <input
                     type="number"
-                    name="floating_email"
+                    name="pageNo"
                     id="floating_email"
                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" "
+                    onChange={handleChange}
                     required
-                    
                   />
                   <label
                     for="floating_email"
@@ -124,7 +175,7 @@ const CreateNewCustomer = ({ onClick }) => {
               <div className="basis-1/2 mr-2">
                 <div className="relative z-0 w-full mb-5 group">
                   <select
-                    name="customer_name"
+                    name="cType"
                     id="customer_name"
                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     required
@@ -132,9 +183,15 @@ const CreateNewCustomer = ({ onClick }) => {
                     <option value="" disabled selected>
                       Select Customer Type
                     </option>
-                    <option className="" value="customer1">Customer Family</option>
-                    <option className="" value="customer2">Customer Genral SMS</option>
-                    <option className="" value="customer2">Customer Notify SMS</option>
+                    <option className="" value="customer1">
+                      Customer Family
+                    </option>
+                    <option className="" value="customer2">
+                      Customer Genral SMS
+                    </option>
+                    <option className="" value="customer2">
+                      Customer Notify SMS
+                    </option>
                   </select>
                   <label
                     for="customer_name"
@@ -147,10 +204,11 @@ const CreateNewCustomer = ({ onClick }) => {
             </div>
           </div>
           <hr className="border"></hr>
+          <div className="text-center text-base font-mono text-red-500">{errMsg}</div>
           <div className="my-2 mx-5">
             <button
               className="border-blue-500 border-2 bg-sky-200 rounded-xl w-full p-2 text-center"
-              onClick={onClick}
+              onClick={handleData}
             >
               Submit
             </button>
@@ -162,7 +220,6 @@ const CreateNewCustomer = ({ onClick }) => {
 };
 
 export default CreateNewCustomer;
-
 
 // import React, { useState } from 'react';
 
@@ -197,4 +254,3 @@ export default CreateNewCustomer;
 // }
 
 // export default App;
-
