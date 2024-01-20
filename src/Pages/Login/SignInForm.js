@@ -42,6 +42,7 @@ const SignInForm = ({ setisLoading }) => {
         userCredential.password
       );
       const user = userData.user;
+      console.log(user)
       setalertMsg("Welcome Admin")
       setTimeout(()=>{
         setalertBanner(true)

@@ -1,0 +1,16 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      // Allow read and write access to all documents
+      allow read, write: if true;
+    }
+
+    // Allow write access to register a new customer only if cPhone is unique
+    match /customers/{customerId} {
+      allow create: if request.resource.data.cPhone is number &&
+                      !exists(/databases/$(database)/documents/customers, request.resource.data.cPhone);
+    }
+  }
+}
