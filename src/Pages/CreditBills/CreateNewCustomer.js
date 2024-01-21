@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
+import Swal from "sweetalert2";
 
 const CreateNewCustomer = ({ onClick }) => {
   const [customerData, setcustomerData] = useState({
@@ -10,37 +11,36 @@ const CreateNewCustomer = ({ onClick }) => {
     pageNo: Number,
     cType: "",
   });
-  const [opningBal, setOpningBal] = useState("")
-  const [errMsg, seterrMsg] = useState("")
+  const [opningBal, setOpningBal] = useState("");
 
   const usersCollectionRef = collection(db, "customers");
   const creditDockRef = collection(db, "creditBill");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
+
     // If the field is 'cPhone', convert the value to a number
-    const updatedValue = (name === 'cPhone' || name === 'pageNo')? +value : value;
-  
+    const updatedValue =
+      name === "cPhone" || name === "pageNo" ? +value : value;
+
     setcustomerData((prevData) => ({
       ...prevData,
       [name]: updatedValue,
     }));
-    console.log(customerData)
+    console.log(customerData);
   };
   const checkUniquePhone = async () => {
     const q = query(
       usersCollectionRef,
       where("cPhone", "==", customerData.cPhone) &&
-      where("pageNo", "==", customerData.pageNo)
-
+        where("pageNo", "==", customerData.pageNo)
     );
     const querySnapshot = await getDocs(q);
     return querySnapshot.empty;
   };
 
-
-  const handleData = async () => {
+  const handleData = async (e) => {
+    e.preventDefault();
     try {
       // Check if cPhone is unique
       const isUnique = await checkUniquePhone();
@@ -50,36 +50,58 @@ const CreateNewCustomer = ({ onClick }) => {
         const docRef = await addDoc(usersCollectionRef, customerData);
         console.log(customerData);
         console.log("Document written with ID:", docRef.id);
-        const AddCreditBill = await addDoc(creditDockRef, {"opningBal" :opningBal , "userId" : docRef.id});
-        console.log(AddCreditBill)
-        console.log("Customer added successfully!");
-        alert("Customer added successfully!");
-        
+        const AddCreditBill = await addDoc(creditDockRef, {
+          opningBal: opningBal,
+          userId: docRef.id,
+        });
+        console.log(AddCreditBill);
+        showPopAlert({title : "Customer added successfully!", icon :"success"})
         onClick();
       } else {
-        seterrMsg("Error: Customer Phone Or Page is not unique.");
-        console.log("Error: Customer Phone Or Page is not unique.");
+        showPopAlert({title : "Error: Customer Phone Or Page is not unique.", icon :"error"})
       }
     } catch (error) {
       console.error("Error adding customer:", error);
     }
   };
+
+  function showPopAlert({title,icon}) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      },
+    });
+    Toast.fire({
+      icon: icon,
+      title: title,
+    });
+  }
   return (
-      <div className="fixed z-10 inset-0 overflow-y-auto">
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="fixed inset-0 bg-gray-500 opacity-75"></div>
-          <div className="bg-white rounded-lg z-20">
-            <div className="flex justify-between items-center p-5 bg-sky-200 rounded-t-lg">
-              <div className="">Create New Customer</div>
-              <div className="">
-                <button
-                  onClick={onClick}
-                  className="text-red-500 hover:text-red-700"
-                >
-                  Close
-                </button>
-              </div>
+    <div className="fixed z-10 inset-0 overflow-y-auto">
+      <form
+        className="flex items-center justify-center min-h-screen"
+        onSubmit={handleData}
+      >
+        <div className="fixed inset-0 bg-gray-500 opacity-75"></div>
+        <div className="bg-white rounded-lg z-20">
+          <div className="flex justify-between items-center p-5 bg-sky-200 rounded-t-lg">
+            <div className="">Create New Customer</div>
+            <div className="">
+              <button
+                type="cancle"
+                onClick={onClick}
+                className="text-red-500 hover:text-red-700"
+              >
+                Close
+              </button>
             </div>
+          </div>
 
           <div className="w-96 m-2 px-5">
             {/* Customer Name */}
@@ -143,7 +165,7 @@ const CreateNewCustomer = ({ onClick }) => {
                 id="floating_email"
                 className="block py-2.5 px-0 w-full text-sm text-red-600 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
-                onChange={(e) =>setOpningBal(parseInt(e.target.value, 10))}
+                onChange={(e) => setOpningBal(parseInt(e.target.value, 10))}
                 required
               />
               <label
@@ -224,17 +246,18 @@ const CreateNewCustomer = ({ onClick }) => {
             </div>
           </div>
           <hr className="border"></hr>
-          <div className="text-center text-base font-mono text-red-500">{errMsg}</div>
+        
           <div className="my-2 mx-5">
             <button
+              type="submit"
               className="border-blue-500 border-2 bg-sky-200 rounded-xl w-full p-2 text-center"
-              onClick={handleData}
+              // onClick={handleData}
             >
               Submit
             </button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
