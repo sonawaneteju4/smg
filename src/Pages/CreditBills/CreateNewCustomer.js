@@ -44,7 +44,6 @@ const CreateNewCustomer = ({ onClick }) => {
     try {
       // Check if cPhone is unique
       const isUnique = await checkUniquePhone();
-
       if (isUnique) {
         // Add a new customer
         const docRef = await addDoc(usersCollectionRef, customerData);
