@@ -7,7 +7,7 @@ const LoginPage = () => {
     useEffect(() => {
         setTimeout(() => {
           setisLoading(false);
-        }, 3000);
+        }, 1000);
       }, []);
 
     return (<>
