@@ -7,6 +7,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 import { useEffect, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from '@vercel/speed-insights/remix';
 
 function App() {
   const [islogin, setislogin] = useState(true);
@@ -23,6 +24,7 @@ function App() {
   return (
     <>
       <Analytics />
+      <SpeedInsights />
       <BrowserRouter>
         {islogin && <Navbar />}
         <Routes>
