@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { auth } from "../../firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import { AlertBanner } from "../assests/AlertBanner";
+import Swal from "sweetalert2";
 
 const SignInForm = ({ setisLoading }) => {
-  const [alertBanner, setalertBanner] = useState(false);
   const [alertMsg, setalertMsg] = useState("")
   const [userCredential, setuserCredential] = useState({
     email: "",
@@ -33,7 +32,6 @@ const SignInForm = ({ setisLoading }) => {
   };
 
   const handleSubmit = async (e) => {
-    setisLoading(true);
     e.preventDefault();
     try {
       const userData = await signInWithEmailAndPassword(
@@ -42,16 +40,15 @@ const SignInForm = ({ setisLoading }) => {
         userCredential.password
       );
       const user = userData.user;
+      showPopAlert({title : "Logged In Success", icon :"success"})
       console.log(user)
       setalertMsg("Welcome Admin")
-      setTimeout(()=>{
-        setalertBanner(true)
-      },5000)
       setisLoading(false);
+
       nav("/dashboard");
       
     } catch (error) {
-      setisLoading(false);
+      showPopAlert({title : (error.message), icon :"error"})
       setalertMsg(error.message)
       setTimeout(()=>{
         setisLoading(false);
@@ -60,9 +57,25 @@ const SignInForm = ({ setisLoading }) => {
       setErrorMsg(error.message);
     }
   };
+  function showPopAlert({title,icon}) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      },
+    });
+    Toast.fire({
+      icon: icon,
+      title: title,
+    });
+  }
   return (
     <>
-    {!alertBanner && <AlertBanner alertMsg={alertMsg} />}
       <div className="flex justify-center items-center h-screen">
         <form
           style={{ backgroundColor: "#F0F3F4" }}

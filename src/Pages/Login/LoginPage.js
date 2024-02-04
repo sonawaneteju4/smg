@@ -7,7 +7,7 @@ const LoginPage = () => {
     useEffect(() => {
         setTimeout(() => {
           setisLoading(false);
-        }, 1000);
+        });
       }, []);
 
     return (<>
@@ -16,6 +16,7 @@ const LoginPage = () => {
         <div className='lg:flex lg:flex-row sm:flex-col h-screen '>
             
             <div className='basis-1/2  bg-orange-500 flex flex-col items-center justify-center'>
+                {/* <img src="/SMG.png" alt="" height="200px"/> */}
                 <div className='font-serif font-extrabold text-white lg:text-4xl md:text-2xl m-1 sm:text-base ' style={{'fontFamily': "Yatra One"}}>श्रीराम मेडिकल अँड सर्जिकल </div>
                 <div className='font-extrabold font-serif text-white lg:text-2xl sm:text-base' style={{'fontFamily': "Yatra One"}}>साक्री</div>
             </div>
