@@ -3,6 +3,7 @@ import { auth } from "../firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import QuickBar from "./CreditBills/QuickBar";
+import CustomerInfo from "./Components/CustomerInfo";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -18,6 +19,9 @@ const Dashboard = () => {
         <QuickBar />
       </div>
       <hr />
+      <div className="mx-5">
+        <CustomerInfo />
+      </div>
     </div>
   );
 };

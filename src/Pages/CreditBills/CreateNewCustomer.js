@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { addDoc, collection, getDocs, query, serverTimestamp, where } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import Swal from "sweetalert2";
 
@@ -11,7 +11,7 @@ const CreateNewCustomer = ({ onClick }) => {
     pageNo: Number,
     cType: "",
   });
-  const [opningBal, setOpningBal] = useState("");
+  const [dueBal, setdueBal] = useState("");
 
   const usersCollectionRef = collection(db, "customers");
   const creditDockRef = collection(db, "creditBill");
@@ -50,8 +50,9 @@ const CreateNewCustomer = ({ onClick }) => {
         console.log(customerData);
         console.log("Document written with ID:", docRef.id);
         const AddCreditBill = await addDoc(creditDockRef, {
-          opningBal: opningBal,
+          dueBal: dueBal,
           userId: docRef.id,
+          date : serverTimestamp()
         });
         console.log(AddCreditBill);
         showPopAlert({title : "Customer added successfully!", icon :"success"})
@@ -159,12 +160,12 @@ const CreateNewCustomer = ({ onClick }) => {
             <div className="relative z-0 w-full mb-5 group">
               <input
                 type="number"
-                name="opningBal"
-                value={opningBal}
+                name="dueBal"
+                value={dueBal}
                 id="floating_email"
                 className="block py-2.5 px-0 w-full text-sm text-red-600 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
-                onChange={(e) => setOpningBal(parseInt(e.target.value, 10))}
+                onChange={(e) => setdueBal(parseInt(e.target.value, 10))}
                 required
               />
               <label
