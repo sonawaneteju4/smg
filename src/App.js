@@ -8,6 +8,8 @@ import { auth } from "./firebaseConfig";
 import { useEffect, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react"
+import { useOnlineStatus } from "./useOnlineStatus.js";
+import NoInternet from "./NoInternet.js";
 
 function App() {
   const [islogin, setislogin] = useState(true);
@@ -21,12 +23,18 @@ function App() {
       }
     });
   }, [islogin]);
+
+  function StatusBar() {
+    const isOnline = useOnlineStatus();
+    return <>{isOnline ?  (<></>):(<NoInternet/>) }</>;
+  }
   return (
     <>
       <Analytics />
       <SpeedInsights />
       <BrowserRouter>
         {islogin && <Navbar />}
+        <StatusBar/>
         <Routes>
           <Route exact path="/" element={<LoginPage />}></Route>
           <Route exact path="/dashboard" element={<Dashboard />}></Route>

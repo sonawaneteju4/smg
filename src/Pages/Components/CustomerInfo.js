@@ -33,7 +33,7 @@ const CustomerInfo = () => {
   return (
     <>
     {customer.map((items)=>(
-    <div key={items.id} className="w-full bg-slate-100 rounded-xl lg:flex justify-between sm:block my-2 px-5 lg:py-0 py-5 "           style={{ pointerEvents: "none" }}
+    <div key={items.id} className="w-full bg-slate-400/10 rounded-xl lg:flex justify-between sm:block my-2 px-5 lg:py-0 py-5 "           style={{ pointerEvents: "none" }}
     >
       {/* Customer Info */}
       <div className="lg:my-3 sm:my-0 flex sm:block justify-center">
@@ -41,16 +41,16 @@ const CustomerInfo = () => {
           <div className="px-2">
             <CiUser />
           </div>
-          <div className="font-bold">
-            {items.cName} , <small className="font-light">{items.village}</small>
+          <div className="font-bold lg:text-base md:text-base text-sm">
+            {items.cName}<small className="font-light">{items.village}</small>
           </div>
         </div>
-        <div className="flex items-center my-3">
+        <div className="flex items-center my-3 ">
           <div className="px-2 ">
             {" "}
             <CiPhone />
           </div>
-          <div className="font-bold">{items.cPhone}</div>
+          <div className="font-bold lg:text-base sm:text-sm">{items.cPhone}</div>
         </div>
       </div>
       {/* Due & Bill Button */}

@@ -17,3 +17,20 @@ code {
     monospace;
 }
 
+.spinner {
+  position: absolute;
+  background-color: white;
+  height: 100%;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  overflow: hidden;
+  }
+
