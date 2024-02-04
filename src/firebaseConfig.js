@@ -9,6 +9,11 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+
+
+// Testing ----------->
+
 const firebaseConfig = {
   apiKey: "AIzaSyC8hjlJS4wd1rJPS7NsUdKoT4MnwkqYfh8",
   authDomain: "smgbackend-2ae76.firebaseapp.com",
@@ -20,6 +25,17 @@ const firebaseConfig = {
   measurementId: "G-GMJS7D1001"
 };
 
+
+// Prod Config -- > 
+// const firebaseConfig = {
+//   apiKey: "AIzaSyD2R7JOB5kXdJhwmxM1IKbmMoOQCBynd3U",
+//   authDomain: "shrirammedicalprod.firebaseapp.com",
+//   projectId: "shrirammedicalprod",
+//   storageBucket: "shrirammedicalprod.appspot.com",
+//   messagingSenderId: "288715427611",
+//   appId: "1:288715427611:web:fc964894a602647704cdbe",
+//   measurementId: "G-5GWN6NVXDG"
+// };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
