@@ -29,7 +29,7 @@ const CustomerInfo = () => {
     getAllCustomers();
     console.log(customer);
     // eslint-disable-next-line
-  }, []);
+  },[]);
   return (
     <>
     {customer.map((items)=>(

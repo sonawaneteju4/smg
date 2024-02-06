@@ -9,7 +9,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 
-const Due = ({ userId }) => {
+const Due = ({ userId}) => {
   const [totalBills, setTotalBills] = useState(0);
   const CreditBillRef = collection(db, "creditBill");
   const q = query(CreditBillRef, where("userId", "==", userId));
