@@ -23,7 +23,7 @@ import { getFirestore } from "firebase/firestore";
 //  messagingSenderId: "55558814674",
 //  appId: "1:55558814674:web:549cc2e627895b82d7a60b",
 //  measurementId: "G-GMJS7D1001"
-};
+//};
 
 
 // Prod Config -- > 
