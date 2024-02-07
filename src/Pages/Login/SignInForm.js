@@ -76,10 +76,10 @@ const SignInForm = ({ setisLoading }) => {
   }
   return (
     <>
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center lg:h-screen lg:mt-0 mt-40">
         <form
           style={{ backgroundColor: "#F0F3F4" }}
-          className="lg:w-full max-w-md shadow-xl rounded-2xl px-8 pt-6 pb-8 mb-4"
+          className="lg:w-full w-80 lg:top-auto  max-w-md shadow-xl rounded-2xl px-8 pt-6 pb-8 mb-4"
           onSubmit={handleSubmit}
         >
           <div className="text-center font-mono font-bold text-xl">

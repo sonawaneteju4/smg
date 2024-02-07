@@ -51,23 +51,33 @@ const QuickBill = ({ onClick }) => {
   const creditDockRef = collection(db, "creditBill");
   const addBill = async () => {
     try {
-      const AddCreditBill = await addDoc(creditDockRef, {
-        dueBal: parseInt(billAmt),
-        userId: searchBillId,
-        transactionType : "credit",
-        date: serverTimestamp(),
+      if (billAmt !== 0 && billAmt !== "") {
+        const AddCreditBill = await addDoc(creditDockRef, {
+          dueBal: parseInt(billAmt),
+          userId: searchBillId,
+          transactionType: "credit",
+          date: serverTimestamp(),
+        });
+        showPopAlert({
+          title: `${billAmt} Added For ${customer[0].data.cName}`,
+          icon: "success",
+        });
+        console.log("Credit Bill added successfully:", AddCreditBill);
+        onClick();
+        window.location.reload();
+      }
+      showPopAlert({
+        title: `Add Amount `,
+        icon: "error",
       });
-      showPopAlert({title : `${billAmt} Added For ${customer[0].data.cName}` , icon : "success"})
-      console.log("Credit Bill added successfully:", AddCreditBill);
-      onClick()
-      window.location.reload()
+
       // If you want to do something after adding the bill, you can place it here
     } catch (error) {
       console.error("Error adding credit bill:", error);
     }
   };
 
-  function showPopAlert({title,icon}) {
+  function showPopAlert({ title, icon }) {
     const Toast = Swal.mixin({
       toast: true,
       position: "top-end",
@@ -84,7 +94,6 @@ const QuickBill = ({ onClick }) => {
       title: title,
     });
   }
-
 
   return (
     <>
@@ -148,7 +157,10 @@ const QuickBill = ({ onClick }) => {
               </div>
             </form>
             {customer.map((items) => (
-              <div className="m-5 bg-gray-100/80 rounded pb-2" key={items.data.id}>
+              <div
+                className="m-5 bg-gray-100/80 rounded pb-2"
+                key={items.data.id}
+              >
                 <div className="text-center ">
                   Customer : {items.data.cName}
                 </div>
