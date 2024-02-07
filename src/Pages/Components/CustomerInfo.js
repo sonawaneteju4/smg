@@ -42,7 +42,7 @@ const CustomerInfo = () => {
             <CiUser />
           </div>
           <div className="font-bold lg:text-base md:text-base text-sm">
-            {items.cName}<small className="font-light">{items.village}</small>
+            {items.cName}<small className="font-light px-2">{items.village}</small>
           </div>
         </div>
         <div className="flex items-center my-3 ">

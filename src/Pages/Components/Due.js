@@ -20,7 +20,7 @@ const Due = ({ userId}) => {
         billAmt: sum("dueBal"),
       });
       setTotalBills(snapshot.data().billAmt);
-      console.log(snapshot.data().billAmt);
+      console.log("userID -- "+userId+ " --- "+snapshot.data().billAmt);
     };
 
     getTotalBills();

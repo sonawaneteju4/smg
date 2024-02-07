@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebaseConfig";
 import Due from "../Components/Due";
+import Swal from "sweetalert2";
 
 const QuickBill = ({ onClick }) => {
   const [isPageNo, setisPageNo] = useState(true);
@@ -53,9 +54,10 @@ const QuickBill = ({ onClick }) => {
       const AddCreditBill = await addDoc(creditDockRef, {
         dueBal: parseInt(billAmt),
         userId: searchBillId,
+        transactionType : "credit",
         date: serverTimestamp(),
       });
-
+      showPopAlert({title : `${billAmt} Added For ${customer[0].data.cName}` , icon : "success"})
       console.log("Credit Bill added successfully:", AddCreditBill);
       onClick()
       window.location.reload()
@@ -64,6 +66,25 @@ const QuickBill = ({ onClick }) => {
       console.error("Error adding credit bill:", error);
     }
   };
+
+  function showPopAlert({title,icon}) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      },
+    });
+    Toast.fire({
+      icon: icon,
+      title: title,
+    });
+  }
+
 
   return (
     <>
@@ -127,7 +148,7 @@ const QuickBill = ({ onClick }) => {
               </div>
             </form>
             {customer.map((items) => (
-              <div className="m-5 bg-gray-100/80 rounded pb-2" key={items.id}>
+              <div className="m-5 bg-gray-100/80 rounded pb-2" key={items.data.id}>
                 <div className="text-center ">
                   Customer : {items.data.cName}
                 </div>

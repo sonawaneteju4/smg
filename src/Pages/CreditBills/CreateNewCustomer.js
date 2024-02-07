@@ -1,7 +1,16 @@
-import React, { useState } from "react";
-import { addDoc, collection, getDocs, query, serverTimestamp, where } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  query,
+  serverTimestamp,
+  where,
+} from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import Swal from "sweetalert2";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 
 const CreateNewCustomer = ({ onClick }) => {
   const [customerData, setcustomerData] = useState({
@@ -10,11 +19,35 @@ const CreateNewCustomer = ({ onClick }) => {
     village: "",
     pageNo: Number,
     cType: "",
+    userMed: [],
   });
+  const animatedComponents = makeAnimated();
+
   const [dueBal, setdueBal] = useState("");
+  const [medOptions, setMedOptions] = useState([]);
 
   const usersCollectionRef = collection(db, "customers");
   const creditDockRef = collection(db, "creditBill");
+  const [selectedMed, setSelectedMed] = useState([]);
+
+  const handleMedicineSelectChange = (selectedOptions) => {
+    // Update selectedMed directly
+    setSelectedMed(selectedOptions);
+
+    // Extract values from selectedMed and update userMed
+    const selectedMedValues = selectedOptions.map((med) => ({
+      id: med.value,
+      medicineName: med.label,
+      // Add other properties as needed
+    }));
+
+    // Update userMed directly
+    setcustomerData((prevData) => ({
+      ...prevData,
+      userMed: selectedMedValues,
+    }));
+    console.log(customerData)
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,26 +79,35 @@ const CreateNewCustomer = ({ onClick }) => {
       const isUnique = await checkUniquePhone();
       if (isUnique) {
         // Add a new customer
+
         const docRef = await addDoc(usersCollectionRef, customerData);
         console.log(customerData);
         console.log("Document written with ID:", docRef.id);
         const AddCreditBill = await addDoc(creditDockRef, {
           dueBal: dueBal,
           userId: docRef.id,
-          date : serverTimestamp()
+          transactionType : "credit",
+          date: serverTimestamp(),
         });
         console.log(AddCreditBill);
-        showPopAlert({title : "Customer added successfully!", icon :"success"})
+        showPopAlert({
+          title: "Customer added successfully!",
+          icon: "success",
+        });
         onClick();
+        window.location.reload()
       } else {
-        showPopAlert({title : "Error: Customer Phone Or Page is not unique.", icon :"error"})
+        showPopAlert({
+          title: "Error: Customer Phone Or Page is not unique.",
+          icon: "error",
+        });
       }
     } catch (error) {
       console.error("Error adding customer:", error);
     }
   };
 
-  function showPopAlert({title,icon}) {
+  function showPopAlert({ title, icon }) {
     const Toast = Swal.mixin({
       toast: true,
       position: "top-end",
@@ -82,6 +124,33 @@ const CreateNewCustomer = ({ onClick }) => {
       title: title,
     });
   }
+
+  const medRef = collection(db, "medicine");
+  const [medList, setmedList] = useState([]);
+  useEffect(() => {
+    const GetMedicineList = async () => {
+      try {
+        const querySnapshot = await getDocs(medRef);
+
+        const medArray = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setmedList(medArray);
+        console.log(medArray);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    GetMedicineList();
+  }, []);
+
+  const formattedMedList = medList.map((med) => ({
+    value: med.id,
+    label: med.medicineName,
+    isSelected: selectedMed.some((selected) => selected.value === med.id),
+    // Include other properties if needed
+  }));
   return (
     <div className="fixed z-10 inset-0 overflow-y-auto">
       <form
@@ -244,9 +313,46 @@ const CreateNewCustomer = ({ onClick }) => {
                 </div>
               </div>
             </div>
+            <div>
+              {/* Typeahead for medicines */}
+              <div className="mb-5">
+                <label
+                  htmlFor="medicineSelect"
+                  className="text-sm text-gray-500"
+                >
+                  Select Medicine
+                </label>
+                <Select
+                  closeMenuOnSelect={false}
+                  components={animatedComponents}
+                  isMulti
+                  options={formattedMedList}
+                  value={selectedMed}
+                  onChange={handleMedicineSelectChange}
+                  placeholder="Search and select medicine"
+                />
+              </div>
+
+              {/* Display selected medicines as buttons */}
+              <div className="my-2">
+                {medOptions
+                  .filter((option) => option.isSelected)
+                  .map((med) => (
+                    <button
+                      key={med.id}
+                      type="button"
+                      onClick={() =>
+                        handleChange("userMed", [...customerData.userMed, med])
+                      }
+                    >
+                      {med.medicineName}
+                    </button>
+                  ))}
+              </div>
+            </div>
           </div>
           <hr className="border"></hr>
-        
+
           <div className="my-2 mx-5">
             <button
               type="submit"
@@ -263,37 +369,3 @@ const CreateNewCustomer = ({ onClick }) => {
 };
 
 export default CreateNewCustomer;
-
-// import React, { useState } from 'react';
-
-// function App() {
-//   const [value, setValue] = useState(0);
-
-//   const handleKeyDown = (event) => {
-//     // Preventing changing the input value via keyboard arrows
-//     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-//       event.preventDefault();
-//     }
-//   };
-
-//   const handleChange = (event) => {
-//     // Allowing changing the input value via direct input
-//     setValue(event.target.value);
-//   };
-
-//   return (
-//     <div className="relative">
-//       <input
-//         type="number"
-//         name="quantity"
-//         id="quantity"
-//         className="block w-full bg-white border border-gray-300 py-2 px-3 rounded-md leading-tight focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
-//         value={value}
-//         onKeyDown={handleKeyDown}
-//         onChange={handleChange}
-//       />
-//     </div>
-//   );
-// }
-
-// export default App;

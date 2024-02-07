@@ -13,7 +13,6 @@ import { getFirestore } from "firebase/firestore";
 
 
 // Testing ----------->
-
 // const firebaseConfig = {
 //   apiKey: "AIzaSyC8hjlJS4wd1rJPS7NsUdKoT4MnwkqYfh8",
 //   authDomain: "smgbackend-2ae76.firebaseapp.com",

@@ -1,7 +1,7 @@
 import React from "react";
 import { auth } from "../firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import QuickBar from "./CreditBills/QuickBar";
 import CustomerInfo from "./Components/CustomerInfo";
 
@@ -15,6 +15,9 @@ const Dashboard = () => {
 
   return (
     <div>
+      <div>
+
+      </div>
       <div className="m-5">
         <QuickBar />
       </div>
