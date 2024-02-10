@@ -25,6 +25,12 @@ function App() {
     });
   }, [islogin]);
 
+  // if ("development" === 'development') {
+  //   console.log = function () {};
+  //   console.warn = function () {};
+  //   console.error = function () {};
+  // }
+
   function StatusBar() {
     const isOnline = useOnlineStatus();
     return <>{isOnline ? <></> : <NoInternet />}</>;
@@ -37,7 +43,7 @@ function App() {
         {islogin && (
           <div>
             <Navbar />
-            <div className="text-blue-900 bg-slate-100 px-1 pl-5 font-bold">
+            <div className="text-blue-900 bg-slate-100 px-1 pl-5 font-serif">
               <NavLink to="/medicines">Add Medicines</NavLink>
             </div>
           </div>

@@ -8,7 +8,10 @@ const AddMediciens = () => {
   const [medList, setmedList] = useState([]);
   const medRef = collection(db, "medicine");
   const checkIsUnique = async () => {
-    const q = query(medRef, where("medicineName", "==", medicine.toLowerCase()));
+    const q = query(
+      medRef,
+      where("medicineName", "==", medicine.toLowerCase())
+    );
     const querySnapshot = await getDocs(q);
     return querySnapshot.empty;
   };
@@ -86,13 +89,7 @@ const AddMediciens = () => {
       {" "}
       <div className="lg:mx-96 md:mx-16 mx-5">
         <form onSubmit={AddNewMedicine}>
-          <div className="mt-1">
-            <label
-              for="medicineName"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Add Medicine
-            </label>
+          <div className="mt-5">
             <input
               type="text"
               id="medicineName"
@@ -123,10 +120,9 @@ const AddMediciens = () => {
         {medList.map((item) => (
           <div key={item.id} className="flex justify-center">
             <button className="bg-green-200/80 lg:px-4 px-2 border-2 border-black rounded-2xl pointer-events-none">
-            {item.medicineName}
+              {item.medicineName.charAt(0).toUpperCase() + item.medicineName.slice(1).toLowerCase()}
             </button>
-            
-            </div>
+          </div>
         ))}
       </div>
     </>

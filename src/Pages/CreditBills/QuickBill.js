@@ -42,12 +42,13 @@ const QuickBill = ({ onClick }) => {
         console.log(error);
       }
     };
-
+    
     getCustomer();
     console.log(customer);
     console.log(userInput);
   }, [userInput]);
-
+  
+  const [handsBy, sethandsBy] = useState("self")
   const creditDockRef = collection(db, "creditBill");
   const addBill = async () => {
     try {
@@ -56,6 +57,7 @@ const QuickBill = ({ onClick }) => {
           dueBal: parseInt(billAmt),
           userId: searchBillId,
           transactionType: "credit",
+          handsBy : handsBy,
           date: serverTimestamp(),
         });
         showPopAlert({
@@ -76,6 +78,7 @@ const QuickBill = ({ onClick }) => {
       console.error("Error adding credit bill:", error);
     }
   };
+
 
   function showPopAlert({ title, icon }) {
     const Toast = Swal.mixin({
@@ -198,6 +201,18 @@ const QuickBill = ({ onClick }) => {
                       Enter New Due Amount
                     </label>
                   </div>
+                </div>
+                <div className="w-full flex justify-center mt-2">
+                <label htmlFor="" className="mt-2 mx-1">Hands By : {" "}</label>
+                  <input
+                    type="text"
+                    className="block py-2.5 px-0 w-40 text-sm text-red-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    name=""
+                    id=""
+                    placeholder="Hand By"
+                    onChange={(e) => {sethandsBy(e.target.value)}}
+                    value={handsBy}
+                  />
                 </div>
                 <div className="my-2 mx-5">
                   <button

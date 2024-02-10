@@ -46,7 +46,7 @@ const CreateNewCustomer = ({ onClick }) => {
       ...prevData,
       userMed: selectedMedValues,
     }));
-    console.log(customerData)
+    console.log(customerData);
   };
 
   const handleChange = (e) => {
@@ -86,7 +86,7 @@ const CreateNewCustomer = ({ onClick }) => {
         const AddCreditBill = await addDoc(creditDockRef, {
           dueBal: dueBal,
           userId: docRef.id,
-          transactionType : "credit",
+          transactionType: "credit",
           date: serverTimestamp(),
         });
         console.log(AddCreditBill);
@@ -95,7 +95,7 @@ const CreateNewCustomer = ({ onClick }) => {
           icon: "success",
         });
         onClick();
-        window.location.reload()
+        window.location.reload();
       } else {
         showPopAlert({
           title: "Error: Customer Phone Or Page is not unique.",
@@ -191,24 +191,6 @@ const CreateNewCustomer = ({ onClick }) => {
                 Customer Name
               </label>
             </div>
-            {/* <div className="">
-            <lable
-              className="block text-gray-700 text-sm  ml-3 mb-2"
-              htmlF0r="cName"
-            >
-              Customer Name
-            </lable>
-            <input
-              className="shadow rounded-xl appearance-none border-2 p-1  w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="cName"
-              name="cName"
-              type="cName"
-              placeholder="Enter Customer Name"
-              // value={userCredential.email}
-              // onChange={onChange}
-              required
-            />
-          </div> */}
             <div className="relative z-0 w-full mb-5 group">
               <input
                 type="number"
@@ -331,23 +313,6 @@ const CreateNewCustomer = ({ onClick }) => {
                   onChange={handleMedicineSelectChange}
                   placeholder="Search and select medicine"
                 />
-              </div>
-
-              {/* Display selected medicines as buttons */}
-              <div className="my-2">
-                {medOptions
-                  .filter((option) => option.isSelected)
-                  .map((med) => (
-                    <button
-                      key={med.id}
-                      type="button"
-                      onClick={() =>
-                        handleChange("userMed", [...customerData.userMed, med])
-                      }
-                    >
-                      {med.medicineName}
-                    </button>
-                  ))}
               </div>
             </div>
           </div>
