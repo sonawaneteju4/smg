@@ -1,50 +1,70 @@
 import React, { useEffect, useState } from "react";
 import {
   collection,
-  getAggregateFromServer,
   getDocs,
   query,
-  sum,
   where,
 } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 
 const Due = ({ userId }) => {
-  const [dueAmount, setdueAmount] = useState(0);
-  const [repayment, setrepayment] = useState(0)
-  const CreditBillRef = collection(db, "creditBill");
-  const q = query(
-    CreditBillRef,
-    where("userId", "==", userId) &&
-      where("transactionType", "==", "credit")
-  );
-  const q2 = query(
-    CreditBillRef,
-    where("userId", "==", userId) &&
-      where("transactionType", "==", "repayment")
-  );
+  const [dueAmount, setDueAmount] = useState(0);
+  const [repayment, setRepayment] = useState(0);
 
   useEffect(() => {
-    const getdueAmount = async () => {
-      const snapshot = await getAggregateFromServer(q, {
-        billAmt: sum("dueBal"),
-      });
-      setdueAmount(snapshot.data().billAmt);
-      console.log("userID -- " + userId + " --- " + snapshot.data().billAmt);
+    const getDueAmount = async () => {
+      try {
+        const creditBillRef = collection(db, "creditBill");
+        const q = query(
+          creditBillRef,
+          where("userId", "==", userId),
+          where("transactionType", "==", "credit")
+        );
+
+        const snapshot = await getDocs(q);
+
+        let totalDueAmount = 0;
+
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          totalDueAmount += data.dueBal || 0;
+        });
+
+        setDueAmount(totalDueAmount);
+      } catch (error) {
+        console.error("Error fetching due amount:", error);
+      }
     };
+
     const getRepaymentAmount = async () => {
-      const snapshot = await getAggregateFromServer(q2, {
-        billAmt: sum("dueBal"),
-      });
-      setrepayment(snapshot.data().billAmt);
-      console.log("userID -- " + userId + " --- " + snapshot.data().billAmt);
+      try {
+        const creditBillRef = collection(db, "creditBill");
+        const q = query(
+          creditBillRef,
+          where("userId", "==", userId),
+          where("transactionType", "==", "repayment")
+        );
+
+        const snapshot = await getDocs(q);
+
+        let totalRepayment = 0;
+
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          totalRepayment += data.dueBal || 0;
+        });
+
+        setRepayment(totalRepayment);
+      } catch (error) {
+        console.error("Error fetching repayment amount:", error);
+      }
     };
 
-    getdueAmount();
-    getRepaymentAmount()
-  }, [userId]); // Include userId in the dependency array to re-run the effect when userId changes
+    getDueAmount();
+    getRepaymentAmount();
+  }, [userId]);
 
-  return <>{(dueAmount)-(repayment)}</>;
+  return <>{dueAmount - repayment}</>;
 };
 
 export default Due;

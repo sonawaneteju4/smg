@@ -12,7 +12,7 @@ const CustomerInfo = () => {
   const [prescriptionModalOpen, setPrescriptionModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState("");
   const [newEntry, setnewEntry] = useState(false);
-  const [updateCustomer, setupdateCustomer] = useState(false)
+  const [updateCustomer, setupdateCustomer] = useState(false);
   const DataRef = collection(db, "customers");
   useEffect(() => {
     // Retrieve all customers
@@ -32,11 +32,10 @@ const CustomerInfo = () => {
 
     // Call the function
     getAllCustomers();
-    console.log("log")
+    console.log("log");
     console.log(customer);
     // eslint-disable-next-line
   }, []);
-
 
   const openPrescriptionModal = (userId) => {
     setSelectedUserId(userId);
@@ -52,15 +51,18 @@ const CustomerInfo = () => {
   const closeNewEntry = () => {
     setnewEntry(false);
   };
-  
+
   return (
     <>
       {customer.map((items) => (
         <div
           key={items.id}
-          className="w-full bg-slate-400/10 rounded-xl lg:flex justify-between sm:block my-2 px-5 lg:py-0 py-5 "
+          className="w-full relative bg-slate-400/10 rounded-xl lg:flex justify-between sm:block my-2 px-5 lg:py-0 py-5 "
           // style={{ pointerEvents: "none" }}
         >
+          <div className="font-semibold text-sm absolute -top-2 -left-2 bg-green-300 px-2 rounded-full">
+            {items.pageNo}
+          </div>{" "}
           {/* Customer Info */}
           <div className="lg:my-3 sm:my-0 flex sm:block justify-center">
             <div className="flex items-center">
@@ -107,7 +109,6 @@ const CustomerInfo = () => {
                   Prescription
                 </button>
               </div>
-
             </div>
           </div>
         </div>
