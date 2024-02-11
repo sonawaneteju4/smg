@@ -45,7 +45,7 @@ const Prescription = ({ userId, closeModal }) => {
     try {
       await updateDoc(docRef, { userMed: selectedMed });
       console.log("UserMed updated in the database");
-      closeModal()
+      closeModal();
     } catch (error) {
       console.error("Error updating userMed in the database", error);
     }
@@ -62,7 +62,7 @@ const Prescription = ({ userId, closeModal }) => {
           console.log(customerData);
           console.log(customerData.data.userMed);
           setSelectedMed(
-            customerData.data.userMed.map((med) => ({
+            customerData?.data?.userMed.map((med) => ({
               value: med.value,
               label: med.label,
             }))
@@ -109,7 +109,12 @@ const Prescription = ({ userId, closeModal }) => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="fixed inset-0 bg-gray-500 opacity-75"></div>
         <div className="bg-white  rounded-lg z-20 pb-5 px-5 ">
-          <div className="text-end py-3 text-red-500 cursor-pointer" onClick={closeModal}>Close</div>
+          <div
+            className="text-end py-3 text-red-500 cursor-pointer"
+            onClick={closeModal}
+          >
+            Close
+          </div>
           <div className="flex justify-between pb-3 border-b gap-3">
             <div
               className="text-sky-500 cursor-pointer"
@@ -117,7 +122,7 @@ const Prescription = ({ userId, closeModal }) => {
                 setisForUpdate(false);
               }}
             >
-               Medicines
+              Medicines
             </div>
             <div
               className="text-sky-500 cursor-pointer"
@@ -149,7 +154,9 @@ const Prescription = ({ userId, closeModal }) => {
                 />
               </div>
               <div className="border-blue-500 border-2 bg-sky-200 rounded-xl w-full p-2 text-center">
-                <button onClick={updateUserMedInDatabase}>Update Medicines</button>
+                <button onClick={updateUserMedInDatabase}>
+                  Update Medicines
+                </button>
               </div>
             </>
           ) : (
@@ -157,9 +164,18 @@ const Prescription = ({ userId, closeModal }) => {
               <div className="lg:w-96 w-80">
                 <div className="text-center border-b">Medicines</div>
                 <div className="gap-1 flex flex-col text-center">
-                  {customer?.data?.userMed.map((item) => (
-                    <div key={item.id} className="odd:bg-slate-100 even:bg-gray-200">{item.label}</div>
-                  ))}
+                  {customer?.data?.userMed?.length > 0 ? (
+                    customer?.data?.userMed?.map((item) => (
+                      <div
+                        key={item.id}
+                        className="odd:bg-slate-100 even:bg-gray-200"
+                      >
+                        {item.label}
+                      </div>
+                    ))
+                  ) : (
+                    <div>No medicine available !</div>
+                  )}
                 </div>
               </div>
             </>
