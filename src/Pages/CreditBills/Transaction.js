@@ -13,7 +13,7 @@ import { db } from "../../firebaseConfig";
 const Transaction = ({ userId }) => {
   const [transactions, setTransactions] = useState([]);
   const [lastDoc, setLastDoc] = useState(null);
-  const pageSize = 3; // Adjust the page size as needed
+  const pageSize = 5; // Adjust the page size as needed
 
   const fetchData = async () => {
     const dataRef = collection(db, "creditBill");
@@ -65,9 +65,9 @@ const Transaction = ({ userId }) => {
       <h1>Transactions:</h1>
       <div>
         {transactions.map((transaction) => (
-          <>
+          
             <div
-              key={transaction.id}
+              key={transaction.data.id}
               className={`${
                 transaction.data.transactionType === "repayment"
                   ? "bg-lime-100"
@@ -91,7 +91,7 @@ const Transaction = ({ userId }) => {
                 </span>
               </div>
             </div>
-          </>
+          
         ))}
       </div>
       {lastDoc && (

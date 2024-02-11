@@ -37,8 +37,8 @@ const CreateNewCustomer = ({ onClick }) => {
 
     // Extract values from selectedMed and update userMed
     const selectedMedValues = selectedOptions.map((med) => ({
-      id: med.value,
-      medicineName: med.label,
+      value: med.value,
+      label: med.label,
       // Add other properties as needed
     }));
 
