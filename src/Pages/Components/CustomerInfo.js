@@ -12,7 +12,7 @@ const CustomerInfo = () => {
   const [prescriptionModalOpen, setPrescriptionModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState("");
   const [newEntry, setnewEntry] = useState(false);
-
+  const [updateCustomer, setupdateCustomer] = useState(false)
   const DataRef = collection(db, "customers");
   useEffect(() => {
     // Retrieve all customers
@@ -32,9 +32,12 @@ const CustomerInfo = () => {
 
     // Call the function
     getAllCustomers();
+    console.log("log")
     console.log(customer);
     // eslint-disable-next-line
   }, []);
+
+
   const openPrescriptionModal = (userId) => {
     setSelectedUserId(userId);
     setPrescriptionModalOpen(true);
@@ -49,6 +52,7 @@ const CustomerInfo = () => {
   const closeNewEntry = () => {
     setnewEntry(false);
   };
+  
   return (
     <>
       {customer.map((items) => (
@@ -103,14 +107,7 @@ const CustomerInfo = () => {
                   Prescription
                 </button>
               </div>
-              <div className="mx-1">
-                <button
-                  className="border-blue-500 border-2 bg-sky-200 rounded-xl w-full p-1 px-2 text-center text-sm"
-                  onClick={() => openPrescriptionModal(items.id)}
-                >
-                  Update User
-                </button>
-              </div>
+
             </div>
           </div>
         </div>

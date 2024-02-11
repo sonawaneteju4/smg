@@ -22,6 +22,7 @@ const CreateNewCustomer = ({ onClick }) => {
     userMed: [],
   });
   const animatedComponents = makeAnimated();
+  
 
   const [dueBal, setdueBal] = useState("");
   const [medOptions, setMedOptions] = useState([]);
