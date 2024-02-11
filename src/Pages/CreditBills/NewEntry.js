@@ -175,7 +175,7 @@ const NewEntry = ({ userId, closeModal }) => {
                   </button>
                   <button
                     onClick={() => handleButtonClick("credit")}
-                    className="border-blue-500 border-2 bg-lime-200 rounded-xl w-full p-1 px-2 text-center text-sm"
+                    className="border-blue-500 border-2 bg-red-200 rounded-xl w-full p-1 px-2 text-center text-sm"
                   >
                     Add Due
                   </button>
