@@ -62,7 +62,7 @@ const CustomerInfo = () => {
         >
           <div className="font-semibold text-sm absolute -top-2 -left-2 bg-green-300 px-2 rounded-full">
             {items.pageNo}
-          </div>{" "}
+          </div>{""}
           {/* Customer Info */}
           <div className="lg:my-3 sm:my-0 flex sm:block justify-center">
             <div className="flex items-center">
@@ -98,7 +98,7 @@ const CustomerInfo = () => {
                   className="border-blue-500 border-2 bg-sky-200 rounded-xl w-full p-1 px-2 text-center text-sm"
                   onClick={() => openNewEntry(items.id)}
                 >
-                  New Entry
+                 Transaction
                 </button>
               </div>
               <div className="mx-1">

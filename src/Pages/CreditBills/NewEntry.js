@@ -17,7 +17,7 @@ import Transaction from "./Transaction";
 const NewEntry = ({ userId, closeModal }) => {
   const [customer, setCustomer] = useState([]);
   const docRef = doc(db, "customers", String(userId)); // userId is the document ID
-  const [billAmt, setbillAmt] = useState(0);
+  const [billAmt, setbillAmt] = useState(Number);
 
   useEffect(() => {
     const getCustomer = async () => {
@@ -38,6 +38,7 @@ const NewEntry = ({ userId, closeModal }) => {
     getCustomer();
     console.log(customer); // Move this inside useEffect after setCustomer
     console.log("userId" + userId);
+    
   }, [userId]);
   const creditDockRef = collection(db, "creditBill");
 
@@ -71,6 +72,7 @@ const NewEntry = ({ userId, closeModal }) => {
 
         console.log("Transaction successful:", AddNewBill);
         closeModal();
+        window.location.reload();
       } else {
         showPopAlert({
           title: "Add Amount",
