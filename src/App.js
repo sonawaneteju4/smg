@@ -43,7 +43,7 @@ function App() {
         {islogin && (
           <div>
             <Navbar />
-            <div className="text-blue-900 bg-slate-100 px-1 pl-5 font-serif">
+            <div className="text-sky-500 hover:text-sky-900 bg-slate-100 px-1 pl-5 font-serif">
               <NavLink to="/medicines">Add Medicines</NavLink>
             </div>
           </div>

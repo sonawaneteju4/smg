@@ -19,7 +19,7 @@ const Logout = () => {
       toast: true,
       position: "top-end",
       showConfirmButton: false,
-      timer: 3000,
+      timer: 1000,
       timerProgressBar: true,
       didOpen: (toast) => {
         toast.onmouseenter = Swal.stopTimer;
@@ -33,11 +33,11 @@ const Logout = () => {
   }
   return (
     <button
-      className="px-2 rounded-xl bg-slate-100 flex  justify-between items-center text-black lg:text-base sm:text-xs hover:cursor-pointer"
+      className="px-2 rounded-full bg-slate-100 flex  justify-between items-center text-black lg:text-base sm:text-xs hover:cursor-pointer"
       onClick={handleLogout}
     >
       <div>
-        <MdLogout className="mx-1" />
+        <MdLogout className="mx-1 text-xs" />
       </div>
       <div>Logout</div>
     </button>

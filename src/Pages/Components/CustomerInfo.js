@@ -12,7 +12,6 @@ const CustomerInfo = () => {
   const [prescriptionModalOpen, setPrescriptionModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState("");
   const [newEntry, setnewEntry] = useState(false);
-  const [updateCustomer, setupdateCustomer] = useState(false);
   const DataRef = collection(db, "customers");
   useEffect(() => {
     // Retrieve all customers
