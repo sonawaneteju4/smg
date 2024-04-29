@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { auth } from "../../firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import Swal from "sweetalert2";
+import UserContext from "../../UserContext/UserContext";
 
 const SignInForm = ({ setisLoading }) => {
   const [alertMsg, setalertMsg] = useState("")
-  const [userCredential, setuserCredential] = useState({
-    email: "",
-    password: "",
-  });
+  // const [userCredential, setuserCredential] = useState({
+  //   email: "",
+  //   password: "",
+  // });
+  const {userCredential, setuserCredential, handleSubmit} = useContext(UserContext) 
   const [errorMsg, setErrorMsg] = useState("");
 
   const nav = useNavigate();
@@ -31,32 +33,32 @@ const SignInForm = ({ setisLoading }) => {
     setuserCredential({ ...userCredential, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const userData = await signInWithEmailAndPassword(
-        auth,
-        userCredential.email,
-        userCredential.password
-      );
-      const user = userData.user;
-      showPopAlert({title : "Logged In Success", icon :"success"})
-      console.log(user)
-      setalertMsg("Welcome Admin")
-      setisLoading(false);
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const userData = await signInWithEmailAndPassword(
+  //       auth,
+  //       userCredential.email,
+  //       userCredential.password
+  //     );
+  //     const user = userData.user;
+  //     showPopAlert({title : "Logged In Success", icon :"success"})
+  //     console.log(user)
+  //     setalertMsg("Welcome Admin")
+  //     setisLoading(false);
 
-      nav("/dashboard");
+  //     nav("/dashboard");
       
-    } catch (error) {
-      showPopAlert({title : (error.message), icon :"error"})
-      setalertMsg(error.message)
-      setTimeout(()=>{
-        setisLoading(false);
-      },2000)
-      console.log("Err---->" + error.message);
-      setErrorMsg(error.message);
-    }
-  };
+  //   } catch (error) {
+  //     showPopAlert({title : (error.message), icon :"error"})
+  //     setalertMsg(error.message)
+  //     setTimeout(()=>{
+  //       setisLoading(false);
+  //     },2000)
+  //     console.log("Err---->" + error.message);
+  //     setErrorMsg(error.message);
+  //   }
+  // };
   function showPopAlert({title,icon}) {
     const Toast = Swal.mixin({
       toast: true,
