@@ -14,10 +14,10 @@ const Dashboard = () => {
   });
 
   return (
-    <div>
-      <div>
+    <>
+      <>
 
-      </div>
+      </>
       <div className="m-5">
         <QuickBar />
       </div>
@@ -25,7 +25,7 @@ const Dashboard = () => {
       <div className="mx-5">
         <CustomerInfo />
       </div>
-    </div>
+    </>
   );
 };
 
