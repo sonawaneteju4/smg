@@ -1,12 +1,12 @@
 import TransactionContext from "./TransactionContext";
 import React, { useEffect, useState } from "react";
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
-import { db } from "../../firebaseConfig";
+// import {
+//   collection,
+//   getDocs,
+//   query,
+//   where,
+// } from "firebase/firestore";
+import { db } from "../../src/firebaseConfig";
 
 const TransactionContextProvider = ({ children }) => {
 
