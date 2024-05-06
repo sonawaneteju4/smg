@@ -14,7 +14,7 @@ import AddMediciens from "./Pages/Components/AddMediciens.js";
 import UserContextProvider from "./UserContext/UserContextProvider";
 import TransactionContextProvider from "./TransContext/TransactionContextProvider.js";
 
-function () {
+function App() {
   const [islogin, setislogin] = useState(true);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
