@@ -1,7 +1,7 @@
 import { NavLink, Route, Routes } from "react-router-dom";
 import "./App.css";
-import LoginPage from "./Pages/Login/LoginPage";
-import Navbar from "./Pages/Navbar";
+import LoginPage from "./components/login/LoginPage.js";
+import Navbar from "./components/navbar/Navbar.js";
 import Dashboard from "./Pages/Dashboard";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebaseConfig";
@@ -48,7 +48,7 @@ function App() {
               <div>
                 <Navbar />
                 <div className="text-sky-500 hover:text-sky-900 bg-slate-100 px-1 pl-5 font-serif">
-                  <NavLink to="/medicines">Add Medicines</NavLink>
+                  {/* <NavLink to="/medicines">Add Medicines</NavLink> */}
                 </div>
               </div>
             )}

@@ -23,13 +23,13 @@ const UserContextProvider = ({ children }) => {
         userCredential.password
       );
       const user = userData.user;
-      showPopAlert({ title: "Logged In Success", icon: "success" });
+      showPopAlert({ title: "Loggin Success!", icon: "success" });
       console.log(user);
       setisLoading(false);
 
       nav("/dashboard");
     } catch (error) {
-      showPopAlert({ title: error.message, icon: "error" });
+      showPopAlert({ title: error.message || "Something wen't worng. ", icon: "error" });
       setTimeout(() => {
         setisLoading(false);
       }, 2000);

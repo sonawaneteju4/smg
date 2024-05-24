@@ -14,7 +14,7 @@ const QuickBar = () => {
   };
   return (
     <>
-      <div className="lg:flex lg:flex-row sm:flex-col text-center">
+      {/* <div className="lg:flex lg:flex-row sm:flex-col text-center">
         <div className="basis-1/2 mx-10 relative">
           <input
             type="text"
@@ -49,7 +49,7 @@ const QuickBar = () => {
         </div>
       </div>
       {newCustomerModel && <CreateNewCustomer onClick={handleClick} />}
-      {quickBill && <QuickBill onClick={handleClick} />}
+      {quickBill && <QuickBill onClick={handleClick} />} */}
     </>
   );
 };

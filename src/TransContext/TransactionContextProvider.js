@@ -1,40 +1,43 @@
 import TransactionContext from "./TransactionContext";
 import React, { useEffect, useState } from "react";
-// import {
-//   collection,
-//   getDocs,
-//   query,
-//   where,
-// } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../../src/firebaseConfig";
 
 const TransactionContextProvider = ({ children }) => {
+const [dueAmount, setDueAmount] = useState(0);
 
 
+  const getDueAmount = async () => {
+    let userId = 'ZzTh72oBMZCsTFBhzYj2';
+      try {
+        const creditBillRef = collection(db, "creditBill");
+        const q = query(
+          creditBillRef,
+          where("userId", "==", userId),
+          where("transactionType", "==", "credit")
+        );
 
-  // const getDueAmount = async () => {
-  //     try {
-  //       const creditBillRef = collection(db, "creditBill");
-  //       const q = query(
-  //         creditBillRef,
-  //         where("userId", "==", userId),
-  //         where("transactionType", "==", "credit")
-  //       );
+        const snapshot = await getDocs(q);
 
-  //       const snapshot = await getDocs(q);
+        let totalDueAmount = 0;
 
-  //       let totalDueAmount = 0;
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          totalDueAmount += data.dueBal || 0;
+        });
 
-  //       snapshot.forEach((doc) => {
-  //         const data = doc.data();
-  //         totalDueAmount += data.dueBal || 0;
-  //       });
-
-  //       setDueAmount(totalDueAmount);
-  //     } catch (error) {
-  //       console.error("Error fetching due amount:", error);
-  //     }
-  //   };
+        setDueAmount(totalDueAmount);
+        console.log("Due Ammount",dueAmount)
+      } catch (error) {
+        console.error("Error fetching due amount:", error);
+      }
+    };
+    
 
   //   const getRepaymentAmount = async () => {
   //     try {

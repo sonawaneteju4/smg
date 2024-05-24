@@ -1,20 +1,18 @@
 import React from "react";
-import { MdLogout } from "react-icons/md";
-import { signOut } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { AiOutlineUser } from "react-icons/ai";
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebaseConfig";
 import Swal from "sweetalert2";
-
 
 const Logout = () => {
   const navigate = useNavigate();
   const handleLogout = async () => {
     await signOut(auth);
-    showPopAlert({title : "Logged Out", icon :"warning"})
-        navigate("/");
-
+    showPopAlert({ title: "Logged Out", icon: "warning" });
+    navigate("/");
   };
-  function showPopAlert({title,icon}) {
+  function showPopAlert({ title, icon }) {
     const Toast = Swal.mixin({
       toast: true,
       position: "top-end",
@@ -33,13 +31,15 @@ const Logout = () => {
   }
   return (
     <button
-      className="px-2 rounded-full bg-slate-100 flex  justify-between items-center text-black lg:text-base sm:text-xs hover:cursor-pointer"
+      className="px-2  rounded-full bg-white/90 text-black flex  justify-between items-center lg:text-base sm:text-xs hover:cursor-pointer"
       onClick={handleLogout}
     >
-      <div>
-        <MdLogout className="mx-1 text-xs" />
+      <div className="flex hover:text-orange-500">
+        <div>
+          <AiOutlineUser className="mx-1 text-xl hover:font-bold" />
+        </div>
+        <div className="navItems_700 underline-hover ">Kalpesh D</div>
       </div>
-      <div>Logout</div>
     </button>
   );
 };
