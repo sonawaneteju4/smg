@@ -17,8 +17,8 @@ const Dashboard = () => {
   return (
     <>
       <div className="flex justify-center items-center border-b">
-        <div className="px-10 my-3">
-          <div className="xl:w-[500px] ">
+        <div className="px-10 my-3 border-r">
+          <div className=" w-[500px] ">
             <div className="relative  flex w-full flex-wrap items-stretch">
               <input
                 type="search"
@@ -57,7 +57,9 @@ const Dashboard = () => {
         <CustomerInfo />
       </div> */}
         </div>
-        <Button name="Create Transaction" />
+        <div className="mx-10">
+          <Button name="Create Transaction" />
+        </div>
       </div>
     </>
   );
