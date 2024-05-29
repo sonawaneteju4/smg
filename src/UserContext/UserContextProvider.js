@@ -27,9 +27,12 @@ const UserContextProvider = ({ children }) => {
       console.log(user);
       setisLoading(false);
 
-      nav("/dashboard");
+      nav("/admin/dashboard");
     } catch (error) {
-      showPopAlert({ title: error.message || "Something wen't worng. ", icon: "error" });
+      showPopAlert({
+        title: error.message || "Something wen't worng. ",
+        icon: "error",
+      });
       setTimeout(() => {
         setisLoading(false);
       }, 2000);

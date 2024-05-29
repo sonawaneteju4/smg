@@ -10,7 +10,7 @@ const Logout = () => {
   const handleLogout = async () => {
     await signOut(auth);
     showPopAlert({ title: "Logged Out", icon: "warning" });
-    navigate("/");
+    navigate("/admin");
   };
   function showPopAlert({ title, icon }) {
     const Toast = Swal.mixin({

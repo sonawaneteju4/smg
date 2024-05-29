@@ -13,6 +13,8 @@ import NoInternet from "./NoInternet.js";
 import AddMediciens from "./Pages/Components/AddMediciens.js";
 import UserContextProvider from "./UserContext/UserContextProvider";
 import TransactionContextProvider from "./TransContext/TransactionContextProvider.js";
+import SubNavbar from "./components/navbar/SubNavbar.js";
+import Home from "./components/home/Home.js";
 
 function App() {
   const [islogin, setislogin] = useState(true);
@@ -44,17 +46,16 @@ function App() {
         <SpeedInsights />
         <TransactionContextProvider>
           <>
+            <Navbar />
             {islogin && (
               <div>
-                <Navbar />
-                <div className="text-sky-500 hover:text-sky-900 bg-slate-100 px-1 pl-5 font-serif">
-                  {/* <NavLink to="/medicines">Add Medicines</NavLink> */}
-                </div>
+                <SubNavbar />
               </div>
             )}
             <StatusBar />
             <Routes>
-              <Route exact path="/" element={<LoginPage />}></Route>
+              <Route exact path="/" element={<Home />}></Route>
+              <Route exact path="/admin" element={<LoginPage />}></Route>
               <Route exact path="/dashboard" element={<Dashboard />}></Route>
               <Route exact path="/medicines" element={<AddMediciens />}></Route>
             </Routes>

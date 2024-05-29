@@ -5,6 +5,89 @@ import { useNavigate } from "react-router-dom";
 import QuickBar from "./CreditBills/QuickBar";
 import CustomerInfo from "./Components/CustomerInfo";
 import Button from "../components/button/Button";
+import { IoPeopleSharp } from "react-icons/io5";
+import { BiTransferAlt } from "react-icons/bi";
+import { BarChart } from "@mui/x-charts/BarChart";
+import { axisClasses } from "@mui/x-charts/ChartsAxis";
+import { LineChart } from "@mui/x-charts/LineChart";
+
+const chartSetting = {
+  width: 600,
+  height: 400,
+  sx: {
+    [`.${axisClasses.left} .${axisClasses.label}`]: {
+      transform: "translate(20px, 0)",
+    },
+  },
+};
+const randomValue = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1)) + min;
+
+const financialDataset = [
+  {
+    month: "Jan",
+    due: randomValue(1000, 5000),
+    repayment: randomValue(500, 4500),
+  },
+  {
+    month: "Feb",
+    due: randomValue(1000, 5000),
+    repayment: randomValue(500, 4500),
+  },
+  {
+    month: "Mar",
+    due: randomValue(1000, 5000),
+    repayment: randomValue(500, 4500),
+  },
+  {
+    month: "Apr",
+    due: randomValue(1000, 5000),
+    repayment: randomValue(500, 4500),
+  },
+  {
+    month: "May",
+    due: randomValue(1000, 5000),
+    repayment: randomValue(500, 4500),
+  },
+  {
+    month: "June",
+    due: randomValue(1000, 5000),
+    repayment: randomValue(500, 4500),
+  },
+  {
+    month: "July",
+    due: randomValue(1000, 5000),
+    repayment: randomValue(500, 4500),
+  },
+  {
+    month: "Aug",
+    due: randomValue(1000, 5000),
+    repayment: randomValue(500, 4500),
+  },
+  {
+    month: "Sept",
+    due: randomValue(1000, 5000),
+    repayment: randomValue(500, 4500),
+  },
+  {
+    month: "Oct",
+    due: randomValue(1000, 5000),
+    repayment: randomValue(500, 4500),
+  },
+  {
+    month: "Nov",
+    due: randomValue(1000, 5000),
+    repayment: randomValue(500, 4500),
+  },
+  {
+    month: "Dec",
+    due: randomValue(1000, 5000),
+    repayment: randomValue(500, 4500),
+  },
+];
+
+console.log(financialDataset);
+const valueFormatter = (value) => `Rs: ${value}`;
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -57,10 +140,51 @@ const Dashboard = () => {
         <CustomerInfo />
       </div> */}
         </div>
-        <div className="mx-10">
-          <Button name="Create Transaction" />
+        <div className="mx-10 border-r px-10">
+          <Button name="Customers" icon=<IoPeopleSharp /> />
+        </div>
+        <div>
+          <Button name="Transactions" icon=<BiTransferAlt /> />
         </div>
       </div>
+
+      <section className="flex">
+        <div className="w-min m-5 shadow-2xl shadow-black/60 rounded-xl basis-1/2">
+          <div className=" text-center navItems_700 text-2xl">Billings</div>
+          <BarChart
+            className=""
+            dataset={financialDataset}
+            xAxis={[{ scaleType: "band", dataKey: "month" }]}
+            series={[
+              { dataKey: "due", label: "Due", color: "red", valueFormatter },
+              {
+                dataKey: "repayment",
+                label: "Repayment",
+                color: "#478C5C",
+                valueFormatter,
+              },
+            ]}
+            {...chartSetting}
+          />
+        </div>
+        <div className="w-min m-5 shadow-2xl shadow-black/60 rounded-xl basis-1/2 ">
+          <div className=" text-center navItems_700 text-2xl">Sales</div>
+
+          <LineChart
+            className=""
+            xAxis={[{ data: [1, 2, 3, 5, 8, 10, 11, 12] }]}
+            series={[
+              {
+                data: [
+                  80000, 50050, 120000, 85000, 138900, 91000, 120000, 100000,
+                ],
+              },
+            ]}
+            width={600}
+            height={400}
+          />
+        </div>
+      </section>
     </>
   );
 };
