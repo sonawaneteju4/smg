@@ -67,11 +67,11 @@ const Navbar = () => {
           className={`hover:text-orange-500 ${
             activeLink === "Products"
               ? "text-orange-500 "
-              : "underline-hover text-orange-500"
+              : "underline-hover text-orange-500 underline underline-offset-[7px]"
           }`}
           onClick={() => handleClick("")}
         >
-          SMG
+          Shree Ram Medical{" "}
         </Link>
         <Link
           to=""

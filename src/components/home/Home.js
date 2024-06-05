@@ -24,7 +24,7 @@ const Home = () => {
         <section className="montserrat-600 text-black -ml-36">
           <div className="text-4xl">
             Unified Healthcare, Every{" "}
-            <span className="text-orange-500 underline">Medicine</span>
+            <span className="text-white underline">Medicine</span>
           </div>
           <div className="text-xl w-8/12 montserrat-600 p-2 text-white">
             Your trusted source for all types of medications and general
@@ -32,7 +32,7 @@ const Home = () => {
           </div>
         </section>
       </Container>
-      <Container id="products" className="h-[80vh] mt-10">
+      <Container id="products" className="h-[80vh] mt-10 border-b">
         <div className="text-center flex flex-col montserrat-600 justify-center text-4xl text-orange-500">
           Product Range
         </div>
