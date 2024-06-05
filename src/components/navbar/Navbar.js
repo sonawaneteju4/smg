@@ -71,7 +71,7 @@ const Navbar = () => {
           }`}
           onClick={() => handleClick("")}
         >
-          Shree Ram Medical{" "}
+          Shriram Medical & Surgical
         </Link>
         <Link
           to=""
