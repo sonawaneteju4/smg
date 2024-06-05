@@ -2,7 +2,7 @@ import { NavLink, Route, Routes } from "react-router-dom";
 import "./App.css";
 import LoginPage from "./components/login/LoginPage.js";
 import Navbar from "./components/navbar/Navbar.js";
-import Dashboard from "./Pages/Dashboard";
+import Dashboard from "./Pages/dashboard/Dashboard.js";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 import { useEffect, useState } from "react";
@@ -29,11 +29,11 @@ function App() {
     });
   }, [islogin]);
 
-  // if ("development" === 'development') {
-  //   console.log = function () {};
-  //   console.warn = function () {};
-  //   console.error = function () {};
-  // }
+  if ("development" === "development") {
+    console.log = function () {};
+    console.warn = function () {};
+    console.error = function () {};
+  }
 
   function StatusBar() {
     const isOnline = useOnlineStatus();
@@ -47,11 +47,7 @@ function App() {
         <TransactionContextProvider>
           <>
             <Navbar />
-            {islogin && (
-              <div>
-                <SubNavbar />
-              </div>
-            )}
+            {islogin && <div>{/* <SubNavbar /> */}</div>}
             <StatusBar />
             <Routes>
               <Route exact path="/" element={<Home />}></Route>

@@ -1,6 +1,40 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer utilities {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem; /* Optional: for padding similar to Bootstrap */
+    padding-right: 1rem; /* Optional: for padding similar to Bootstrap */
+  }
+  @screen sm {
+    .container {
+      max-width: 540px;
+    }
+  }
+  @screen md {
+    .container {
+      max-width: 720px;
+    }
+  }
+  @screen lg {
+    .container {
+      max-width: 960px;
+    }
+  }
+  @screen xl {
+    .container {
+      max-width: 1140px;
+    }
+  }
+  @screen 2xl {
+    .container {
+      max-width: 1320px;
+    }
+  }
+}
 
 body {
   margin: 0;

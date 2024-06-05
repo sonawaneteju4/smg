@@ -27,7 +27,7 @@ const UserContextProvider = ({ children }) => {
       console.log(user);
       setisLoading(false);
 
-      nav("/admin/dashboard");
+      nav("/dashboard");
     } catch (error) {
       showPopAlert({
         title: error.message || "Something wen't worng. ",
